@@ -6,7 +6,7 @@ $('document').ready(function(){
 		var vw;
 		$(window).resize(function(){
 			 vw = $(window).width()/2;
-			$('#b1,#b2,#b3,#b4,#b5,#b6,#b7,b8').stop();
+			$('#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8').stop();
 			$('#b11').animate({top:240, left: vw-350},500);
 			$('#b22').animate({top:240, left: vw-250},500);
 			$('#b33').animate({top:240, left: vw-150},500);
@@ -100,13 +100,14 @@ $('document').ready(function(){
 		var randtop = 500*Math.random();
 		$('#b7').animate({left:randleft,bottom:randtop},10000,function(){
 			loopSeven();
+			loopEight();
 		});
 	}
-	function loopSeven() {
+	function loopEight() {
 		var randleft = 1000*Math.random();
 		var randtop = 500*Math.random();
 		$('#b8').animate({left:randleft,bottom:randtop},10000,function(){
-			loopSeven();
+			loopEight();
 		});
 	}
 
@@ -131,6 +132,16 @@ $('document').ready(function(){
 		$(this).fadeOut('slow').delay(5000).promise().done(function(){
 			$('#cake_fadein').fadeIn('slow');
 		});
+
+		// after the flying animation finishes, stop the floating loops and remove balloon elements
+		// (prevents flown balloons from lingering on desktop or small viewports)
+		setTimeout(function(){
+			// stop any ongoing animations on balloon elements BUT keep them in DOM
+			// so the "Best Wishes" step can show them later
+			$('#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b11,#b22,#b33,#b44,#b55,#b66,#b77,#b88').stop(true,true);
+			// remove only the decorative balloon-border images after flight completes
+			$('.balloon-border').stop(true,true).fadeOut(800, function(){ $(this).remove(); });
+		}, 9000);
 	});	
 
 	$('#cake_fadein').click(function(){
@@ -177,30 +188,46 @@ $('document').ready(function(){
 	
 	$('#story').click(function(){
 		$(this).fadeOut('slow');
+
+		// When message begins (after the cake fades out) hide the original congratulation
+		// balloons so they don't overlap the message. We fade them out at the moment the
+		// message fades in so users see the congrats up until the message actually starts.
 		$('.cake').fadeOut('fast').promise().done(function(){
+			// hide any balloon elements (works whether they have been renamed #b11.. or not)
+			$('.balloons').fadeOut('fast');
 			$('.message').fadeIn('slow');
 		});
 		
-		var i;
+		var paragraphs = $('.message p');
 
-		function msgLoop (i) {
-			$("p:nth-child("+i+")").fadeOut('slow').delay(800).promise().done(function(){
-			i=i+1;
-			$("p:nth-child("+i+")").fadeIn('slow').delay(1000);
-			if(i==50){
-				$("p:nth-child(49)").fadeOut('slow').promise().done(function () {
+		function msgLoop(i) {
+			if (i >= paragraphs.length - 1) {
+				// reached the end — hide the last message then show the cake
+				paragraphs.eq(i).fadeOut('slow').promise().done(function () {
 					$('.cake').fadeIn('fast');
-				});
-				
-			}
-			else{
-				msgLoop(i);
-			}			
+					// show the photo collage now that the story/messages finished
+					// toggle .visible so the layout stays as flex and images keep their natural size
+					$('#photo_collage').delay(500).queue(function(next){
+						$(this).addClass('visible');
+						next();
+					});
 
-		});
-			// body...
+					// keep banner visible until collage appears — then fade it out so the page is clean
+					setTimeout(function(){
+						$('.bannar').fadeOut('slow');
+					}, 2000);
+				});
+				return;
+			}
+
+			paragraphs.eq(i).fadeOut('slow').delay(800).promise().done(function (){
+				i = i + 1;
+				paragraphs.eq(i).fadeIn('slow').delay(1000);
+				msgLoop(i);
+			});
 		}
-		
+
+		// start the messaging loop from the first paragraph
 		msgLoop(0);
 		
 	});

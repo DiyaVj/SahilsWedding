@@ -1,6 +1,5 @@
 body {
-	/*background-color: #FFDAB9;	*/
-	background-color: #000;
+	background-color: #000000;
 	-webkit-transition:background-color linear 5s;
 	-moz-transition:background-color linear 5s;
 	-o-transition:background-color linear 5s;
@@ -12,8 +11,8 @@ body {
 	display: none;
 }
 .peach {
-	background-color: #B19CD8;
-	
+	/* soft ivory / blush used as the 'lights on' state */
+	background-color: #FFF6EE;
 }
 .peach-after {
 	-webkit-animation:peach_alive linear 8s infinite;
@@ -24,92 +23,42 @@ body {
 }
 
 @-webkit-keyframes peach_alive {
-	0%{
-		background-color: #B19CD8;
-	}
-	25%{
-		background-color: #8a7bff;
-	}
-	50%{
-		background-color: #B19CD8;
-	}
-	75%{
-		background-color: #8a7bff;
-	}
-	100%{
-		background-color: #B19CD8;
-	}
+	0%{ background-color: #FFF6EE; }
+	25%{ background-color: #FFF3D9; }
+	50%{ background-color: #FFF6EE; }
+	75%{ background-color: #FFF3D9; }
+	100%{ background-color: #FFF6EE; }
 }
 @-moz-keyframes peach_alive {
-	0%{
-		background-color: #B19CD8;
-	}
-	25%{
-		background-color: #8a7bff;
-	}
-	50%{
-		background-color: #B19CD8;
-	}
-	75%{
-		background-color: #8a7bff;
-	}
-	100%{
-		background-color: #B19CD8;
-	}
+	0%{ background-color: #FFF6EE; }
+	25%{ background-color: #FFF3D9; }
+	50%{ background-color: #FFF6EE; }
+	75%{ background-color: #FFF3D9; }
+	100%{ background-color: #FFF6EE; }
 }
 
 @-o-keyframes peach_alive {
-	0%{
-		background-color: #B19CD8;
-	}
-	25%{
-		background-color: #8a7bff;
-	}
-	50%{
-		background-color: #B19CD8;
-	}
-	75%{
-		background-color: #8a7bff;
-	}
-	100%{
-		background-color: #B19CD8;
-	}
+	0%{ background-color: #FFF6EE; }
+	25%{ background-color: #FFF3D9; }
+	50%{ background-color: #FFF6EE; }
+	75%{ background-color: #FFF3D9; }
+	100%{ background-color: #FFF6EE; }
 }
 
 @-ms-keyframes peach_alive {
-	0%{
-		background-color: #B19CD8;
-	}
-	25%{
-		background-color: #8a7bff;
-	}
-	50%{
-		background-color: #B19CD8;
-	}
-	75%{
-		background-color: #8a7bff;
-	}
-	100%{
-		background-color: #B19CD8;
-	}
+	0%{ background-color: #FFF6EE; }
+	25%{ background-color: #FFF3D9; }
+	50%{ background-color: #FFF6EE; }
+	75%{ background-color: #FFF3D9; }
+	100%{ background-color: #FFF6EE; }
 }
 
 @keyframes peach_alive {
-	0%{
-		background-color: #B19CD8;
-	}
-	25%{
-		background-color: #8a7bff;
-	}
-	50%{
-		background-color: #B19CD8;
-	}
-	75%{
-		background-color: #8a7bff;
-	}
-	100%{
-		background-color: #B19CD8;
-	}
+	0%{ background-color: #FFF6EE; }
+	25%{ background-color: #FFF3D9; }
+	50%{ background-color: #FFF6EE; }
+	75%{ background-color: #FFF3D9; }
+	100%{ background-color: #FFF6EE; }
 }
 
 
@@ -970,108 +919,99 @@ audio {
 
 .bannar {
 	max-width: 100%;
-	-webkit-transform:translate(0px,-500px);
-	-moz-transform:translate(0px,-500px);
-	-o-transform:translate(0px,-500px);
-	-ms-transform:translate(0px,-500px);
-	transform:translate(0px,-500px);
-
+	/* position the banner as an overlay at the top-center so it never expands page height
+	   which could cause scrolling. Keep it visually hidden until animation triggers. */
+	position: fixed;
+	top: 4%;
+	left: 50%;
+	z-index: 1200; /* above page but behind UI controls if needed */
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transform: translateX(-50%) translateY(-500px);
+	-moz-transform: translateX(-50%) translateY(-500px);
+	-o-transform: translateX(-50%) translateY(-500px);
+	-ms-transform: translateX(-50%) translateY(-500px);
+	transform: translateX(-50%) translateY(-500px);
+	transition: opacity 360ms ease, visibility 0s linear 360ms; /* visibility toggles after fade */
 }
 .bannar-come {
 	-webkit-animation: bannar_come linear 6s;
-	-webkit-transform:translate(0px,0px);
 	-moz-animation: bannar_come linear 6s;
-	-moz-transform:translate(0px,0px);
 	-o-animation: bannar_come linear 6s;
-	-o-transform:translate(0px,0px);
 	-ms-animation: bannar_come linear 6s;
-	-ms-transform:translate(0px,0px);
 	animation: bannar_come linear 6s;
-	transform:translate(0px,0px);
+	opacity: 1;
+	visibility: visible;
+	transition: opacity 360ms ease; /* make come-in feel smooth */
 }
 @-webkit-keyframes bannar_come {
 	0%{
-		-webkit-transform:translate(0px,-1000px);
+		-webkit-transform:translateX(-50%) translateY(-1000px) rotate(0deg);
 	}
 	33%{
-		-webkit-transform:translate(0px,0px);
-		-webkit-transform:rotate(10deg);
-		/*-webkit-transform:scale(1.5);*/
+		-webkit-transform:translateX(-50%) translateY(0px) rotate(10deg);
 	}
 	66% {
-		-webkit-transform:translate(0px,100px);
-		-webkit-transform:rotate(-10deg);
+		-webkit-transform:translateX(-50%) translateY(100px) rotate(-10deg);
 	}
 	100% {
-		-webkit-transform:translate(0px,0px);
+		-webkit-transform:translateX(-50%) translateY(0px) rotate(0deg);
 	}
 }
 @-moz-keyframes bannar_come {
 	0%{
-		-moz-transform:translate(0px,-1000px);
+		-moz-transform:translateX(-50%) translateY(-1000px) rotate(0deg);
 	}
 	33%{
-		-moz-transform:translate(0px,0px);
-		-moz-transform:rotate(10deg);
-		/*-webkit-transform:scale(1.5);*/
+		-moz-transform:translateX(-50%) translateY(0px) rotate(10deg);
 	}
 	66% {
-		-moz-transform:translate(0px,100px);
-		-moz-transform:rotate(-10deg);
+		-moz-transform:translateX(-50%) translateY(100px) rotate(-10deg);
 	}
 	100% {
-		-moz-transform:translate(0px,0px);
+		-moz-transform:translateX(-50%) translateY(0px) rotate(0deg);
 	}
 }
 @-o-keyframes bannar_come {
 	0%{
-		-o-transform:translate(0px,-1000px);
+		-o-transform:translateX(-50%) translateY(-1000px) rotate(0deg);
 	}
 	33%{
-		-o-transform:translate(0px,0px);
-		-o-transform:rotate(10deg);
-		/*-webkit-transform:scale(1.5);*/
+		-o-transform:translateX(-50%) translateY(0px) rotate(10deg);
 	}
 	66% {
-		-o-transform:translate(0px,100px);
-		-o-transform:rotate(-10deg);
+		-o-transform:translateX(-50%) translateY(100px) rotate(-10deg);
 	}
 	100% {
-		-o-transform:translate(0px,0px);
+		-o-transform:translateX(-50%) translateY(0px) rotate(0deg);
 	}
 }
 @-ms-keyframes bannar_come {
 	0%{
-		-ms-transform:translate(0px,-1000px);
+		-ms-transform:translateX(-50%) translateY(-1000px) rotate(0deg);
 	}
 	33%{
-		-ms-transform:translate(0px,0px);
-		-ms-transform:rotate(10deg);
-		/*-webkit-transform:scale(1.5);*/
+		-ms-transform:translateX(-50%) translateY(0px) rotate(10deg);
 	}
 	66% {
-		-ms-transform:translate(0px,100px);
-		-ms-transform:rotate(-10deg);
+		-ms-transform:translateX(-50%) translateY(100px) rotate(-10deg);
 	}
 	100% {
-		-ms-transform:translate(0px,0px);
+		-ms-transform:translateX(-50%) translateY(0px) rotate(0deg);
 	}
-}o
+}
 @keyframes bannar_come {
 	0%{
-		transform:translate(0px,-1000px);
+		transform:translateX(-50%) translateY(-1000px) rotate(0deg);
 	}
 	33%{
-		transform:translate(0px,0px);
-		transform:rotate(10deg);
-		/*-webkit-transform:scale(1.5);*/
+		transform:translateX(-50%) translateY(0px) rotate(10deg);
 	}
 	66% {
-		transform:translate(0px,100px);
-		transform:rotate(-10deg);
+		transform:translateX(-50%) translateY(100px) rotate(-10deg);
 	}
 	100% {
-		transform:translate(0px,0px);
+		transform:translateX(-50%) translateY(0px) rotate(0deg);
 	}
 }
 
@@ -1086,36 +1026,36 @@ audio {
 	background-size: 100px 183px;
 }
 .balloons h2 {
-	text-transform: uppercase;
-	font-family: 'Signika', sans-serif;
-	font-size: 50px;
-	color: #BF4136;
-	text-shadow: 5px 5px 5px #FFF;
+	text-transform: none;
+	font-family: 'Great Vibes', cursive;
+	font-size: 44px;
+	color: #6B3E1B; /* warm gold/brown */
+	text-shadow: 1px 1px 0 rgba(255,255,255,0.6);
 	display: none;
 }
 #b1,#b11 {
-	background-image: url('1.png');
+	background-image: url('baloon2.png');
 }
 #b2,#b22 {
-	background-image: url('2.png');
+	background-image: url('calendar.png');
 }
 #b3,#b33 {
-	background-image: url('3.png');
+	background-image: url('cheers.png');
 }
 #b4,#b44{
-	background-image: url('4.png');
+	background-image: url('circle.png');
 }
 #b5,#b55{
-	background-image: url('5.png');
+	background-image: url('cute.png');
 }
 #b6,#b66{
-	background-image: url('6.png');
+	background-image: url('cycle.png');
 }
 #b7,#b77{
-	background-image: url('7.png');
+	background-image: url('gift.png');
 }
 #b8,#b88{
-	background-image: url('8.png');
+	background-image: url('baloon.png');
 }
 .balloons-rotate-behaviour-one {
 	-webkit-animation: balloons_rotate_one linear 10s infinite;
@@ -1275,24 +1215,24 @@ audio {
 	display: none;
 }
 .message p {
-	font-family: 'Signika', sans-serif;
-	font-size: 30px;
-	text-transform: uppercase;
-	color: #5840b6;
-	text-shadow: 2px 2px 2px #FFF;
+	font-family: 'Playfair Display', serif;
+	font-size: 28px;
+	text-transform: none;
+	color: #5B4636; /* warm neutral */
+	text-shadow: none;
 	display: none;
-	font-weight: bold;
-	margin-bottom: 5px;
+	font-weight: 400;
+	margin-bottom: 10px;
 }
 
 .btn-primary {
-        border-color: #466baf;
-        padding: 10px;
-        text-transform: uppercase;
-        font-family: 'Signika', sans-serif;
-        font-weight: 700;
-        color: #fff;
-        background-color: #466baf;
+	border-color: #b77a33;
+	padding: 10px;
+	text-transform: uppercase;
+	font-family: 'Playfair Display', serif;
+	font-weight: 700;
+	color: #fff;
+	background-color: #C9A36A; /* soft gold */
 }
     .btn-primary:hover,
     .btn-primary:focus,
@@ -1307,8 +1247,72 @@ audio {
 
 
     /*controlling tablet width*/
-    /*@media only screen and (max-width: 720px){
-    	.container {
-    		-webkit-transform: scale(0.9);
-    	}
-    }*/
+	/* Responsive adjustments - tablet and mobile-friendly layout */
+
+	/* Large tablets / small laptops */
+	@media only screen and (max-width: 992px) {
+		.bannar { width: 35% !important; }
+		.balloons { width: 90px; height: 165px; }
+		.balloons h2 { font-size: 42px; }
+		.container { padding: 0 8px; }
+		.message { margin-top: 60px; }
+		.message p { font-size: 22px; }
+		.cake { left:50%; margin-left: -140px; }
+		.btn-primary { padding: 8px 10px; font-size: 13px; }
+	}
+
+	/* Mobile phones */
+	@media only screen and (max-width: 600px) {
+		/* Make banner bigger, more prominent */
+		.bannar { width: 80% !important; }
+
+		/* smaller balloons to prevent overlap and keep them readable */
+		.balloons { width: 70px; height: 130px; }
+		.balloons h2 { font-size: 30px; }
+
+		/* center and scale the main container for narrow screens */
+		.container { padding: 0 10px; }
+
+		/* make messages readable, not all caps, reduced size */
+		.message { margin-top: 40px; }
+		.message p { font-size: 18px; line-height: 1.35; margin-bottom: 8px; }
+
+		/* control panel / buttons stack and grow to full width */
+		.navbar.navbar-fixed-bottom .col-md-6 { width: 100%; margin-left: 0; }
+		.navbar.navbar-fixed-bottom .col-md-6 .btn { display:block; width: calc(100% - 40px); margin: 6px auto; }
+		.btn-primary { display: inline-block; width: 100%; box-sizing: border-box; padding: 12px; font-size: 14px; }
+
+		/* cake smaller on phones */
+		.cake { transform: scale(0.7); margin-top: 20px; }
+
+		/* make sure message area is not hidden under the fixed navbar */
+		.message { margin-bottom: 160px; }
+
+		/* ensure the balloon-border (images) don't take too much space */
+		.balloon-border { width: 45%; }
+
+		/* hide floating letter balloons on small screens to keep layout readable */
+		.balloons { display: none !important; }
+	}
+
+	/* Very small phones / landscape issues */
+	@media only screen and (max-width: 360px) {
+		.balloons h2 { font-size: 26px; }
+		.message p { font-size: 16px; }
+		.cake { transform: scale(0.6); }
+		.btn-primary { padding: 10px; font-size: 13px; }
+		.message { margin-top: 30px; margin-bottom: 180px; }
+	}
+
+	/* Photo collage styles — images keep their natural aspect ratio (no cropping) */
+	.photo-collage { margin: 30px 0 40px; display: flex; gap: 16px; align-items: flex-start; /* hidden by default */ opacity: 0; max-height: 0; overflow: hidden; transform: translateY(12px); transition: opacity 420ms ease, max-height 420ms ease, transform 420ms ease; }
+	.photo-collage.visible { opacity: 1; max-height: 3000px; transform: translateY(0); }
+	.photo-collage .col-md-4 { padding-left: 6px; padding-right: 6px; }
+	.collage-img { display:block; width:100%; height:auto; border-radius:8px; box-shadow: 0 6px 20px rgba(0,0,0,0.45); border: 3px solid rgba(255,255,255,0.06); }
+
+	/* On small screens stack images and keep natural height */
+	@media only screen and (max-width: 600px) {
+		.photo-collage { display: block; margin-bottom: 240px; }
+		.photo-collage .col-md-4 { padding: 8px 20px; }
+		.collage-img { height: auto; border-radius:6px; }
+	}
